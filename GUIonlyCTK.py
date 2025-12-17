@@ -27,16 +27,16 @@ FONT_SIZE_BASE_MIN = 10  # Changed from 8
 FONT_SIZE_BASE_MAX = 16  # Changed from 12
 
 # ------------------------------------------------------------------------------
-# COLOR THEME SETTINGS - DARK MODE (Inverted Colors)
+# COLOR THEME SETTINGS - LIGHT MODE
 # ------------------------------------------------------------------------------
-BACKGROUND_COLOR = "#1a1a1a"  # Dark background (inverted from #f0f0f0)
-FRAME_BACKGROUND_COLOR = "#2d2d2d"  # Dark frame background (inverted from #ffffff)
-TEXT_COLOR = "#e0e0e0"  # Light text (inverted from #000000)
-SECONDARY_TEXT_COLOR = "#999999"  # Light secondary text (inverted from #666666)
+BACKGROUND_COLOR = "#f0f0f0"  # Light background
+FRAME_BACKGROUND_COLOR = "#ffffff"  # Light frame background
+TEXT_COLOR = "#000000"  # Dark text
+SECONDARY_TEXT_COLOR = "#666666"  # Dark secondary text
 
-BUTTON_BACKGROUND_COLOR = "#3d3d3d"  # Dark button (inverted from #e0e0e0)
-BUTTON_ACTIVE_COLOR = "#4d4d4d"  # Slightly lighter on press (inverted from #d0d0d0)
-BUTTON_TEXT_COLOR = "#e0e0e0"  # Light button text (inverted from #000000)
+BUTTON_BACKGROUND_COLOR = "#e0e0e0"  # Light button
+BUTTON_ACTIVE_COLOR = "#d0d0d0"  # Slightly darker on press
+BUTTON_TEXT_COLOR = "#000000"  # Dark button text
 
 STATUS_READY_COLOR = "#28a745"  # Keep green for ready
 STATUS_WARNING_COLOR = "#ffc107"  # Keep yellow for warning
@@ -103,8 +103,8 @@ class GUIOnlyApp(ctk.CTk):
         super().__init__()
         
         # Set appearance mode and color theme
-        ctk.set_appearance_mode("dark")
-        ctk.set_default_color_theme("dark-blue")
+        ctk.set_appearance_mode("light")
+        ctk.set_default_color_theme("blue")
         
         self.title("Wood Sorting Application - Modern UI (CustomTkinter)")
 
@@ -198,12 +198,12 @@ class GUIOnlyApp(ctk.CTk):
 
         # Left Camera Feed
         self.left_canvas = tk.Canvas(self.live_tab, width=camera_width, height=camera_height,
-                                    bg='gray', highlightbackground="#555555", highlightthickness=2)
+                                    bg='lightgray', highlightbackground="#cccccc", highlightthickness=2)
         self.left_canvas.place(x=padding, y=padding)
 
         # Right Camera Feed
         self.right_canvas = tk.Canvas(self.live_tab, width=camera_width, height=camera_height,
-                                     bg='gray', highlightbackground="#555555", highlightthickness=2)
+                                     bg='lightgray', highlightbackground="#cccccc", highlightthickness=2)
         self.right_canvas.place(x=padding + camera_width + padding, y=padding)
 
         # =====================
@@ -249,8 +249,8 @@ class GUIOnlyApp(ctk.CTk):
         bottom_right_width = bottom_left_width
 
         # Left side - Wood's Grade and Status
-        grade_frame = ctk.CTkFrame(self.live_tab, width=bottom_left_width, height=bottom_section_height - 2 * padding,
-                                  corner_radius=6)
+        grade_frame = ctk.CTkFrame(self.live_tab, width=bottom_left_width, height=100,
+                                    corner_radius=6, fg_color=FRAME_BACKGROUND_COLOR)
         grade_frame.place(x=padding, y=bottom_y)
         grade_frame.pack_propagate(False)
 
@@ -263,9 +263,10 @@ class GUIOnlyApp(ctk.CTk):
         self.status_label.pack(pady=(5, 10))
 
         # Right side - Control buttons
-        button_frame = ctk.CTkFrame(self.live_tab, width=bottom_right_width, height=bottom_section_height - 2 * padding,
-                                   corner_radius=6, fg_color="transparent")
+        button_frame = ctk.CTkFrame(self.live_tab, width=bottom_right_width, height=100,
+                                    corner_radius=6, fg_color=FRAME_BACKGROUND_COLOR)
         button_frame.place(x=padding + bottom_left_width + padding, y=bottom_y)
+        button_frame.pack_propagate(False)
 
         # Buttons frame for horizontal layout
         buttons_subframe = ctk.CTkFrame(button_frame, fg_color="transparent")
@@ -285,15 +286,7 @@ class GUIOnlyApp(ctk.CTk):
             fg_color="#dc3545", hover_color="#c82333", corner_radius=6,
             font=("Arial", 20, "bold")
         )
-        stop_button.pack(side="left", fill="both", expand=True, padx=(2, 2))
-
-        # REPORTS button
-        reports_button = ctk.CTkButton(
-            buttons_subframe, text="REPORTS", command=lambda: self.tabview.set("Reports"),
-            fg_color="#007bff", hover_color="#0056b3", corner_radius=6,
-            font=("Arial", 20, "bold")
-        )
-        reports_button.pack(side="left", fill="both", expand=True, padx=(2, 0))
+        stop_button.pack(side="left", fill="both", expand=True, padx=(2, 0))
 
         # =====================
         # REPORTS TAB CONTENT
